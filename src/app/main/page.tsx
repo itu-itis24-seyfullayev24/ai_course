@@ -15,7 +15,7 @@ export default function MainPage() {
         if (!response.ok) throw new Error("Failed to load posts");
         const data = await response.json();
         setPosts(data);
-      } catch (err) {
+      } catch (err: any) {
         setError(err.message);
       }
     };
