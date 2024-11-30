@@ -3,8 +3,13 @@ import path from "path";
 
 // Enable dynamic params handling
 export const dynamicParams = true;
-
-export default async function PostPage({ params }: { params: { slug: any } }) {
+type Params = Promise<{ slug: string[] }>;
+export default async function PostPage({
+  params,
+}: {
+  params: { slug: Params };
+}) {
+  const { slug } = await params;
   try {
     // Load posts.json file dynamically
     const filePath = path.join(process.cwd(), "src", "app", "posts.json");
