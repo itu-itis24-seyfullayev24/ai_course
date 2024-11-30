@@ -26,12 +26,15 @@ export default function MainPage() {
   if (error) {
     return <div>Error loading posts: {error}</div>;
   }
-
+  type Post = {
+    slug: string;
+    title: string;
+  };
   return (
     <div style={{ padding: "20px" }}>
       <h1>Main Page</h1>
       {posts.length > 0 ? (
-        posts.map((post) => (
+        posts.map((post: Post) => (
           <div key={post.slug} style={{ marginBottom: "10px" }}>
             <h3>{post.title}</h3>
             <Link href={`/posts/${post.slug}`}>
