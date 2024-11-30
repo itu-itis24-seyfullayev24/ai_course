@@ -18,8 +18,7 @@ import { useSearchParams } from "next/navigation";
 export function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const searchParams = useSearchParams();
-  const error = searchParams?.get("error");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = await signIn("credentials", {
@@ -29,6 +28,7 @@ export function LoginForm() {
       callbackUrl: "/main",
     });
   };
+
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
@@ -48,19 +48,9 @@ export function LoginForm() {
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              {error && (
-                <p
-                  style={{
-                    color: "red",
-                    border: "1px solid red",
-                    padding: "10px",
-                    borderRadius: "4px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  Invalid username or password
-                </p>
-              )}
+              <Suspense fallback={<p>Loading...</p>}>
+                <ErrorMessage />
+              </Suspense>
               <Label htmlFor="username">Username</Label>
               <Input
                 id="main"
@@ -88,5 +78,26 @@ export function LoginForm() {
         </form>
       </CardContent>
     </Card>
+  );
+}
+
+function ErrorMessage() {
+  const searchParams = useSearchParams();
+  const error = searchParams?.get("error");
+
+  if (!error) return null;
+
+  return (
+    <p
+      style={{
+        color: "red",
+        border: "1px solid red",
+        padding: "10px",
+        borderRadius: "4px",
+        marginBottom: "10px",
+      }}
+    >
+      Invalid username or password
+    </p>
   );
 }
