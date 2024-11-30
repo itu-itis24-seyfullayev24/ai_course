@@ -5,7 +5,11 @@ import path from "path";
 
 const usersFilePath = path.join(process.cwd(), "users.json");
 const users = JSON.parse(fs.readFileSync(usersFilePath, "utf-8"));
-
+type User = {
+  username: string;
+  password: string;
+  name: string;
+};
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -16,7 +20,7 @@ export const authOptions = {
       },
       async authorize(credentials) {
         const user = users.find(
-          (u) =>
+          (u: User) =>
             u.username === credentials?.username &&
             u.password === credentials?.password
         );
