@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -30,7 +29,7 @@ export function LoginForm() {
   };
 
   return (
-    <Card className="mx-auto max-w-sm">
+    <Card className=" max-w-sm absolute left-0 right-0 m-auto ">
       <CardHeader>
         <CardDescription className="text-lg">
           Welcome to the AI course. Please login to continue. If you do not have

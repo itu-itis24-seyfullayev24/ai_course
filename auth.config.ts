@@ -9,6 +9,7 @@ type User = {
   username: string;
   password: string;
   name: string;
+  email: string;
 };
 export const authOptions = {
   providers: [
@@ -26,7 +27,7 @@ export const authOptions = {
         );
 
         if (user) {
-          return { id: user.username, name: user.name };
+          return { id: user.username, name: user.name, email: user.email };
         }
 
         throw new Error("Invalid username or password");

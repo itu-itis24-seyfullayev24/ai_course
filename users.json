@@ -2,16 +2,19 @@
   {
     "username": "admin",
     "password": "admin123",
-    "name": "Admin User"
-  },
-  {
-    "username": "user1",
-    "password": "password1",
-    "name": "User One"
+    "name": "Admin",
+    "email": "rseyfullayev26@gmail.com"
   },
   {
     "username": "ravan",
     "password": "revan2007",
-    "name": "Ravan"
+    "name": "Ravan",
+    "email": "rseyfullayev26@gmail.com"
+  },
+  {
+    "username": "omar",
+    "password": "omar2006gadimli",
+    "name": "Omar",
+    "email": "no_email"
   }
 ]
