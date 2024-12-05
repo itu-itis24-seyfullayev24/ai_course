@@ -1,18 +1,29 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import NavUser from "@/components/avatar_user";
 import LoadingAnimation from "@/components/loading";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+type Post = {
+  slug: string;
+  title: string;
+};
+
 export default function MainPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const [posts, setPosts] = useState([]); // Always defined outside conditional logic
-  const [error, setError] = useState(null);
+  const [posts, setPosts] = useState<Post[]>([]); // Set type here
+  const [error, setError] = useState<string | null>(null);
 
-  // Redirect if session is not available (for protected routes)
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/");
@@ -22,9 +33,9 @@ export default function MainPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch("/posts.json"); // Ensure this path is correct
+        const response = await fetch("/posts.json");
         if (!response.ok) throw new Error("Failed to load posts");
-        const data = await response.json();
+        const data: Post[] = await response.json(); // Ensure type Post[]
         setPosts(data);
       } catch (err: any) {
         setError(err.message);
@@ -42,31 +53,21 @@ export default function MainPage() {
     return <div>Error loading posts: {error}</div>;
   }
 
-  type Post = {
-    slug: string;
-    title: string;
-  };
-
   return (
     <div style={{ padding: "20px" }}>
       {session && (
-        <div>
-          <NavUser
-            user={{
-              name: session.user?.name || "John Doe",
-              email: session.user?.email || "john.doe@example.com",
-              avatar: session.user?.image || "avatar_url",
-            }}
-          />
-        </div>
+        <NavUser
+          user={{
+            name: session.user?.name || "John Doe",
+            email: session.user?.email || "john.doe@example.com",
+            avatar: session.user?.image || "avatar_url",
+          }}
+        />
       )}
+
       {posts.length > 0 ? (
-        posts.map((post: Post) => (
-          <div
-            key={post.slug}
-            style={{ marginBottom: "10px" }}
-            className="mt-[4rem]"
-          >
+        posts.map((post) => (
+          <div key={post.slug} style={{ marginBottom: "10px" }}>
             <h3>{post.title}</h3>
             <Link href={`/posts/${post.slug}`}>
               <button>View Post</button>
@@ -76,6 +77,10 @@ export default function MainPage() {
       ) : (
         <LoadingAnimation />
       )}
+
+      <Accordion type="single" collapsible className="w-[20rem]">
+        {/* Accordion Content */}
+      </Accordion>
     </div>
   );
 }
