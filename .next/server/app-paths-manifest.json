@@ -1,9 +1,1 @@
-{
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/posts/route": "app/api/posts/route.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js",
-  "/main/page": "app/main/page.js",
-  "/posts/[slug]/page": "app/posts/[slug]/page.js"
-}
+{}
